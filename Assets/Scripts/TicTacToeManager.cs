@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public class TicTacToeManager : MonoBehaviour
 {
     private NetworkedServer server;
-   // private GameRoomManager gameRoom;
     public List<int> players = new List<int>(2);
     private int player1;
     private int player2;
@@ -16,7 +15,6 @@ public class TicTacToeManager : MonoBehaviour
     private void Start()
     {
         server = GameObject.Find("NetworkServer").GetComponent<NetworkedServer>();
-       // gameRoom = GameObject.Find("GameRoomManager").GetComponent<GameRoomManager>();
     }
 
     private int CoinFlip()
@@ -38,7 +36,7 @@ public class TicTacToeManager : MonoBehaviour
             {
                 player2 = 0;
             }
-            server.SendMessageToClient(Signifiers.StartGameSignifier.ToString() + "X", players[player1]);
+            server.SendMessageToClient(Signifiers.StartGameSignifier.ToString() + "," + "X", players[player1]);
         }
     }
 
@@ -49,13 +47,13 @@ public class TicTacToeManager : MonoBehaviour
 
         if (connectionID == players[player1])
         {
-            server.SendMessageToClient(Signifiers.GamePlaySignifier.ToString() + "," + "O" + "," + playerMove[2] , players[player2]);
-            Debug.Log($"player 2 Presses {playerMove[2]} and plays O");
+            server.SendMessageToClient(Signifiers.GamePlaySignifier.ToString() + "," + "X" + "," + playerMove[2] , players[player2]);
+            Debug.Log($"player 1 Presses {playerMove[2]} and plays X");
         }
         else
         {
-            server.SendMessageToClient(Signifiers.GamePlaySignifier.ToString() + "," + "X" + "," + playerMove[2], players[player1]);
-            Debug.Log($"player 1 Presses {playerMove[2]} and plays X");
+            server.SendMessageToClient(Signifiers.GamePlaySignifier.ToString() + "," + "O" + "," + playerMove[2], players[player1]);
+            Debug.Log($"player 2 Presses {playerMove[2]} and plays X");
         }
     }
 }
