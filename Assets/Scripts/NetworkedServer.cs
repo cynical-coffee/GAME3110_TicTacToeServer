@@ -99,5 +99,10 @@ public class NetworkedServer : MonoBehaviour
         {
             ticTacToeManager.ProcessPlayerMove(msg, id);
         }
+
+        if (msg.StartsWith(Signifiers.WinnerSignifier.ToString()))
+        {
+            ticTacToeManager.DeclareWinner(id);
+        }
     }
 }

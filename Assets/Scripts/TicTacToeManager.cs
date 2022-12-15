@@ -11,6 +11,7 @@ public class TicTacToeManager : MonoBehaviour
     public List<int> players = new List<int>(2);
     private int player1;
     private int player2;
+    
 
     private void Start()
     {
@@ -48,12 +49,26 @@ public class TicTacToeManager : MonoBehaviour
         if (connectionID == players[player1])
         {
             server.SendMessageToClient(Signifiers.GamePlaySignifier.ToString() + "," + "X" + "," + playerMove[2] , players[player2]);
+            int slot = Int32.Parse(playerMove[2]);
             Debug.Log($"player 1 Presses {playerMove[2]} and plays X");
         }
         else
         {
             server.SendMessageToClient(Signifiers.GamePlaySignifier.ToString() + "," + "O" + "," + playerMove[2], players[player1]);
             Debug.Log($"player 2 Presses {playerMove[2]} and plays X");
+            int slot = Int32.Parse(playerMove[2]);
+        }
+    }
+
+    public void DeclareWinner(int connectionID)
+    {
+        if (connectionID == players[player1])
+        {
+            Debug.Log("Player 1 Wins");
+        }
+        else
+        {
+            Debug.Log("Player 2 Wins");
         }
     }
 }
